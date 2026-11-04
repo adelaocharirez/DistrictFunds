@@ -1,0 +1,29 @@
+# --- Secrets (never commit these) ---
+.env
+.env.local
+*.env
+!.env.example
+
+# --- Java / Maven (backend) ---
+backend/target/
+*.class
+*.jar
+*.war
+*.log
+hs_err_pid*
+
+# --- Node / Vite (frontend) ---
+frontend/node_modules/
+frontend/dist/
+node_modules/
+npm-debug.log*
+
+# --- Editors ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.iml
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
