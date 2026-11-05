@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:16
+    container_name: districtfunds-db
+    environment:
+      # These come from the .env file next to this one.
+      POSTGRES_DB: ${DB_NAME:-districtfunds}
+      POSTGRES_USER: ${DB_USERNAME:-districtfunds}
+      # :? stops Compose with an error if DB_PASSWORD is missing or blank.
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+      
+    volumes:
+      # Keeps the data when the container is stopped or recreated.
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      # "Is Postgres ready to accept connections yet?"
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-districtfunds} -d ${DB_NAME:-districtfunds}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
